@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {aLottieView} from 'lottie-react-native';
+import {LottieView} from 'lottie-react-native';
 
 export default class SantaAnimation extends React.Component{
     render(){
