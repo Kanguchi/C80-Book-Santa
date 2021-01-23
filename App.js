@@ -9,10 +9,12 @@ import BookRequestScreen from './screens/BookRequestScreen';
 import CustomSideBarMenu from './components/customSideBarMenu';
 import SettingScreen from './screens/Settings';
 
-export default function App() {
-  return (
-    <AppContainer />
-  );
+export default class App extends React.Component {
+  render(){
+    return (
+        <AppContainer />
+    );
+  };
 }
 
 

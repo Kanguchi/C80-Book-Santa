@@ -14,13 +14,13 @@ export default class SettingScreen extends React.Component{
             address: '',
             emailID: '',
             docID: '',
-        }
+        };
     }
     getUserDetails=()=>{
         //var user = firebase.auth().currentUser;
         var email = firebase.auth().currentUser.email;
-        db.collection('users').where('emailID', '==', email).get().then(snapshot=>{
-            snapshot.forEach(doc=>{
+        db.collection("users").where("emailID", "==", email).get().then((snapshot)=>{
+            snapshot.forEach(doc)=>{
                 var data = doc.data()
                 this.setState({
                     emailID: data.email_ID,
@@ -30,8 +30,8 @@ export default class SettingScreen extends React.Component{
                     mobile_number: data.mobile_number,
                     docID: doc.id           
                 })
-            })
-        })
+            }) 
+        }
     }
     updateUserDetails=()=>{
         db.collection('users').doc(this.state.docID).update({
