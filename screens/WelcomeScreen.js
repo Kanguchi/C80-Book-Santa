@@ -23,7 +23,8 @@ export default class WelcomeScreen extends Component{
         } else {
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then((response) => {
-                    db.collection('users').add({first_name: this.state.first_name,
+                    db.collection('users').add({
+                         first_name: this.state.first_name,
                          last_name: this.state.last_name,
                          mobile_number: this.state.mobile_number,
                          emailID: this.state.emailID,
@@ -41,14 +42,15 @@ export default class WelcomeScreen extends Component{
             });
         }
     }
-    userLogin=(email, password)=>{
-        firebase.auth().signInWithEmailAndPassword(email, password)
+    userLogin=(emailID, password)=>{
+        firebase.auth().signInWithEmailAndPassword(emailID, password)
         .then(()=>{
-            return alert('Successfully Logged In');
+            this.props.navigation.navigate('DonateBooks')
         })
         .catch((error)=>{
             var errorCode = error.code;
             var errorMessage = error.message;
+            console.log(errorMessage)
             return alert('Error Message')
         })
     }
@@ -126,23 +128,21 @@ export default class WelcomeScreen extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <View style={{justifyContent:'center', alignItems: 'center'}}>{
+                <View style={{justifyContent:'center', alignItems: 'center'}}>
+                </View>
+                {
                     this.showModal()
                 }
-                </View>
-                <View>
+                <View style={{justifyContent:'center', alignItems:'center'}}>
                     <Text style={styles.title}>Book Santa</Text>
-                </View>
-               <View style={styles.profileContainer}>
                     <Image source={require('../assets/santa.gif')} style={{width: 200, height: 180}}/>
-               </View>
+                </View>
                 <View style={styles.profileContainer}>
                     <TextInput style={styles.loginBox}
                     placeholder='abc@example.com'
                     keyboardType='email-address'
                     onChangeText={(text)=>{
                         this.setState({emailID: text})
-
                     }}/>
                     <TextInput style={styles.loginBox}
                     secureTextEntry={true}
@@ -152,21 +152,19 @@ export default class WelcomeScreen extends Component{
                             password: text
                         })
                     }}/>
-                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <TouchableOpacity style={[styles.button, {marginBottom: 20, marginTop: 20}]}
-                        onPress={()=>{
-                            console.log(this.state.emailID)
-                            this.userLogin(this.state.emailD, this.state.password);
-                        }}>
-                            <Text style={styles.buttonText}>Login</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}
-                        onPress={()=>{
-                            this.setState({isModalVisible: true})
-                        }}>
-                            <Text style={styles.buttonText}>Sign Up</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={[styles.button, {marginBottom: 20, marginTop: 20}]}
+                    onPress={()=>{
+                        console.log(this.state.emailID)
+                        this.userLogin(this.state.emailID, this.state.password);
+                    }}>
+                        <Text style={styles.buttonText}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button}
+                    onPress={()=>{
+                        this.setState({isModalVisible: true})
+                    }}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
